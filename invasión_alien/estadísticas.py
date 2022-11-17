@@ -1,5 +1,5 @@
 class Estadísticas():
-    "Actualizaión de estadísticas del juego."
+    "Actualización de estadísticas del juego."
 
     def __init__(self, ai_settings):
         "Iniciar estadísticas."
