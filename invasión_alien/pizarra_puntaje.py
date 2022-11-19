@@ -1,6 +1,6 @@
 import pygame.font
 from pygame.sprite import Group
-from ship import Ship
+from nave import Nave
 
 
 class pizarra_puntaje():
@@ -62,11 +62,11 @@ class pizarra_puntaje():
     def prep_ships(self):
         """Show how many ships are left."""
         self.ships = Group()
-        for ship_number in range(self.stats.ships_left):
-            ship = Ship(self.ai_settings, self.screen)
-            ship.rect.x = 10 + ship_number * ship.rect.width
-            ship.rect.y = 10
-            self.ships.add(ship)
+        for nave_numero in range(self.stats.ships_left):
+            nave = Nave(self.ai_settings, self.screen)
+            nave.rect.x = 10 + nave_numero * nave.rect.width
+            nave.rect.y = 10
+            self.ships.add(nave)
 
     def show_score(self):
         """Draw score to the screen."""
