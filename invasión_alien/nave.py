@@ -7,16 +7,16 @@ from pygame.sprite import Sprite
 
 class Nave(Sprite):
     "Esta es la clase de la nave que se utilizará para jugar."
-    def __init__(self, ai_settings, screen):
+    def __init__(self, ai_ajustes, pantalla):
         "Posición inicial de la nave en la pantalla"
         super(Nave, self).__init__()
-        self.screen = screen
-        self.ai_settings = ai_settings
+        self.screen = pantalla
+        self.ai_settings = ai_ajustes
 
         # Cargar imagen de la nave.
         self.image = pygame.image.load("images/nave1.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.screen_rect = screen.get_rect()
+        self.screen_rect = pantalla.get_rect()
 
         # Ubicar la nave en el centro de la pantalla cuando inicia el juegp.
         self.rect.centerx = self.screen_rect.centerx

@@ -4,9 +4,9 @@
 class Estadisticas():
     "Actualización de estadísticas del juego."
 
-    def __init__(self, ai_settings):
+    def __init__(self, ai_ajustes):
         "Iniciar estadísticas."
-        self.ai_settings = ai_settings
+        self.ai_settings = ai_ajustes
         self.reset_stats()
 
         # Iniciar el juego en estado inactivo.

@@ -9,12 +9,12 @@ from nave import Nave
 class pizarra_puntaje():
     "Esta clase es una pizarra que informa la puntuación del usuario."
 
-    def __init__(self, ai_settings, screen, stats):
+    def __init__(self, ai_ajustes, pantalla, estadisticas):
         "Características del registro de puntuación"
-        self.screen = screen
-        self.screen_rect = screen.get_rect()
-        self.ai_settings = ai_settings
-        self.stats = stats
+        self.screen = pantalla
+        self.screen_rect = pantalla.get_rect()
+        self.ai_settings = ai_ajustes
+        self.stats = estadisticas
 
         # Configuración de la pizarra.
         self.text_color = (30, 30, 30)
@@ -40,9 +40,9 @@ class pizarra_puntaje():
 
     def prep_high_score(self):
         "Crear una imagen con la puntuación más alta alcanzada."
-        high_score = int(round(self.stats.high_score, -1))
-        high_score_str = "{:,}".format(high_score)
-        self.high_score_image = self.font.render(high_score_str, True,
+        puntuacion_alta = int(round(self.stats.high_score, -1))
+        puntuacion_alta_str = "{:,}".format(puntuacion_alta)
+        self.high_score_image = self.font.render(puntuacion_alta_str, True,
                                                  self.text_color,
                                                  self.ai_settings.bg_color)
 

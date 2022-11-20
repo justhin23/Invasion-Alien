@@ -21,7 +21,7 @@ class Boton():
         self.rect = pygame.Rect(0, 0, self.ancho, self.alto)
         self.rect.center = self.pantalla_rect.center
 
-        # The button message only needs to be prepped once.
+        # Mensaje del botón.
         self.prep_msg(msg)
 
     def prep_msg(self, msg):
@@ -32,6 +32,6 @@ class Boton():
         self.msg_image_rect.center = self.rect.center
 
     def draw_button(self):
-        # Dibujar el botón y luego el mensaje.
+        """Dibujar el botón y luego el mensaje."""
         self.pantalla.fill(self.boton_color, self.rect)
         self.pantalla.blit(self.msg_image, self.msg_image_rect)
