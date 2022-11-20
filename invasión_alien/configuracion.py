@@ -7,8 +7,8 @@ class Configuracion():
     def __init__(self):
         "Especificaciones varias."
         # Especificaciones para la consola.
-        self.screen_width = 1200
-        self.screen_height = 800
+        self.screen_width = 1031
+        self.screen_height = 644
         self.bg_color = (230, 230, 230)
 
         # Ship settings.
@@ -32,9 +32,9 @@ class Configuracion():
 
     def initialize_dynamic_settings(self):
         "Configuraciones cambiantes durante el juego."
-        self.ship_speed_factor = 1.5
-        self.bullet_speed_factor = 3
-        self.alien_speed_factor = 1
+        self.ship_speed_factor = 3
+        self.bullet_speed_factor = 9
+        self.alien_speed_factor = 3
 
         # Puntos ganados por cada alien derribado.
         self.alien_points = 10
