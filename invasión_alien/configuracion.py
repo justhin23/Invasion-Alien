@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 class Configuracion():
     "Es una clase encaragada de todas las configuraciones del juego."
 

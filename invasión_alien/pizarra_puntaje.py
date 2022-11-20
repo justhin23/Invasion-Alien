@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import pygame.font
 from pygame.sprite import Group
 from nave import Nave

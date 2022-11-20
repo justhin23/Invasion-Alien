@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 class Estadisticas():
     "Actualización de estadísticas del juego."
 
@@ -6,10 +9,10 @@ class Estadisticas():
         self.ai_settings = ai_settings
         self.reset_stats()
 
-        # Start game in an inactive state.
+        # Iniciar el juego en estado inactivo.
         self.game_active = False
 
-        # High score should never be reset.
+        # La puntuación más alta antes de iniciar es 0.
         self.high_score = 0
 
     def reset_stats(self):
