@@ -134,8 +134,9 @@ def check_bullet_alien_collisions(ai_ajustes, pantalla, stats, sb, nave,
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    #sonido_colision = pygame.mixer.Sound("collision.wav")
+    sonido_colisión = pygame.mixer.Sound("collision.wav")
     if collisions:
+        sonido_colisión.play()
         for aliens in collisions.values():
             stats.score += ai_ajustes.alien_points * len(aliens)
             sb.prep_score()

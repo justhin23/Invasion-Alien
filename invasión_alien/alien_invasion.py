@@ -35,8 +35,8 @@ def run_game():
     gf.create_fleet(ai_ajustes, pantalla, nave, aliens)
 
     # Sonido de fondo.
-    #pygame.mixer.music.load("Interplanetary_Odyssey.ogg")
-    #pygame.mixer.music.play()
+    pygame.mixer.music.load("Interplanetary_Odyssey.ogg")
+    pygame.mixer.music.play()
 
     # Bucle del juego.
     while True:

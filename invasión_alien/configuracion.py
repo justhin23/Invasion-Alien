@@ -11,7 +11,7 @@ class Configuracion():
         self.screen_height = 644
         self.bg_color = (230, 230, 230)
 
-        # Ship settings.
+        # Especificaciones de la nave.
         self.ship_limit = 3
 
         # Especificaciones de las balas.
@@ -32,8 +32,8 @@ class Configuracion():
 
     def initialize_dynamic_settings(self):
         "Configuraciones cambiantes durante el juego."
-        self.ship_speed_factor = 3
-        self.bullet_speed_factor = 9
+        self.ship_speed_factor = 9
+        self.bullet_speed_factor = 18
         self.alien_speed_factor = 3
 
         # Puntos ganados por cada alien derribado.
