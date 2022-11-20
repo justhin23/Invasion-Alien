@@ -28,7 +28,7 @@ def run_game():
 
     # Nave, grupos de balas y grupos de aliens.
     nave = Nave(ai_ajustes, pantalla)
-    bullets = Group()
+    balas = Group()
     aliens = Group()
 
     # Crear las filas con aliens.
@@ -41,17 +41,17 @@ def run_game():
     # Bucle del juego.
     while True:
         gf.check_events(ai_ajustes, pantalla, stats, sb, play_button, nave,
-                        aliens, bullets)
+                        aliens, balas)
 
         if stats.game_active:
             nave.update()
             gf.update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                              bullets)
+                              balas)
             gf.update_aliens(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                             bullets)
+                             balas)
 
         gf.update_screen(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                         bullets, play_button)
+                         balas, play_button)
 
 
 run_game()
