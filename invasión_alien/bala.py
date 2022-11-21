@@ -9,7 +9,7 @@ class Bala(Sprite):
     """Clase para hacer balas."""
 
     def __init__(self, ai_ajustes, pantalla, nave):
-        """Create a bullet object, at the ship's current position."""
+        """Crear la bala con una posición inicial igual a la de la nave."""
         super().__init__()
         self.pantalla = pantalla
 
@@ -29,7 +29,6 @@ class Bala(Sprite):
         """Mover la bala hacia arriba en línea recta."""
         # Actualizar el valor float de la posición de la bala.
         self.y -= self.speed_factor
-        # Update the rect position.
         self.rect.y = self.y
 
     def dibujo_bala(self):

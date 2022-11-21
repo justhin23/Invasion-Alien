@@ -47,7 +47,7 @@ def check_keyup_events(event, nave):
         nave.moving_left = False
 
 
-def check_events(ai_ajustes, pantalla, stats, sb, play_button, nave, aliens,
+def check_events(ai_ajustes, pantalla, estadisticas, sb, play_button, nave, aliens,
                  balas):
     """Responder a eventos del teclado y mouse."""
     for event in pygame.event.get():
@@ -59,11 +59,11 @@ def check_events(ai_ajustes, pantalla, stats, sb, play_button, nave, aliens,
             check_keyup_events(event, nave)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_ajustes, pantalla, stats, sb, play_button,
+            check_play_button(ai_ajustes, pantalla, estadisticas, sb, play_button,
                               nave, aliens, balas, mouse_x, mouse_y)
 
 
-def check_play_button(ai_ajustes, pantalla, stats, sb, play_button, nave,
+def check_play_button(ai_ajustes, pantalla, estadisticasestadisticass play_button, nave,
                       aliens, balas, mouse_x, mouse_y):
     """Iniciar cuando se oprime el boton de play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
@@ -75,8 +75,8 @@ def check_play_button(ai_ajustes, pantalla, stats, sb, play_button, nave,
         pygame.mouse.set_visible(False)
 
         # Restablecer estadisticas del juego.
-        stats.reset_stats()
-        stats.game_active = True
+        estadisticasestadisticasst_stats()
+        estadisticasestadisticass_active = True
 
         # Restablecer imagenes del marcador.
         sb.prep_score()
@@ -129,7 +129,7 @@ def update_screen(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
     pygame.display.flip()
 
 
-def update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens, balas):
+def update_bullets(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
     """Actualizar la posicion de las balas, eliminar balas viejas."""
     # Mantener actualizada la posicion de las balas.
     balas.update()
@@ -139,7 +139,7 @@ def update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens, balas):
         if bala.rect.bottom <= 0:
             balas.remove(bala)
 
-    check_bullet_alien_collisions(ai_ajustes, pantalla, stats, sb, nave,
+    check_bullet_alien_collisions(ai_ajustes, pantalla, estadisticas, sb, nave,
                                   aliens, balas)
 
 
@@ -271,7 +271,7 @@ def create_alien(ai_ajustes, pantalla, aliens, numero_de_alien,
 
 
 def create_fleet(ai_ajustes, pantalla, nave, aliens):
-    """Crear la flota de lians."""
+    """Crear la flota de aliens."""
 
     alien = Alien(ai_ajustes, pantalla)
     cantidad_aliens = get_number_aliens_x(ai_ajustes, alien.rect.width)
