@@ -53,9 +53,10 @@ def run_game():
                               balas)
             gf.update_aliens(ai_ajustes, pantalla, stats, sb, nave, aliens,
                              balas, mensaje_go)
+            
 
         gf.update_screen(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                         balas, play_button, mensaje_go)
-
+                       balas, play_button, mensaje_go)
+        
 
 run_game()

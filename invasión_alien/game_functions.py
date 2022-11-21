@@ -8,22 +8,37 @@ from bala import Bala
 from alien import Alien
 
 
-def check_keydown_events(event, ai_ajustes, pantalla, nave, bullets):
-    """Respond to keypresses."""
-    if event.key == pygame.K_RIGHT:
+def check_keydown_events(event, ai_ajustes, pantalla, nave, balas):
+    """respuesta a cuando se oprime algun boton."""
+ 
+    if event.key == pygame.K_p:
+        pause()
+    elif event.key == pygame.K_RIGHT:
         nave.moving_right = True
     elif event.key == pygame.K_LEFT:
         nave.moving_left = True
     elif event.key == pygame.K_SPACE:
-        fire_bullet(ai_ajustes, pantalla, nave, bullets)
+        fire_bullet(ai_ajustes, pantalla, nave, balas)
     elif event.key == pygame.K_q:
         sys.exit()
     elif event.type == pygame.QUIT:
         sys.exit()
-
-
+       
+def pause():
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                paused = False
+                pygame.quit()
+                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    paused = False
+                
+    
 def check_keyup_events(event, nave):
-    """Respond to key releases."""
+    """Respuesta a cuando se deja de oprimir una tecla"""
     if event.key == pygame.K_RIGHT:
         nave.moving_right = False
     elif event.key == pygame.K_LEFT:
@@ -31,103 +46,103 @@ def check_keyup_events(event, nave):
 
 
 def check_events(ai_ajustes, pantalla, stats, sb, play_button, nave, aliens,
-                 bullets):
-    """Respond to keypresses and mouse events."""
+                 balas):
+    """responder a eventos del teclado y mouse."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_ajustes, pantalla, nave, bullets)
+            check_keydown_events(event, ai_ajustes, pantalla, nave, balas)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, nave)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             check_play_button(ai_ajustes, pantalla, stats, sb, play_button,
-                              nave, aliens, bullets, mouse_x, mouse_y)
+                              nave, aliens, balas, mouse_x, mouse_y)
 
 
 def check_play_button(ai_ajustes, pantalla, stats, sb, play_button, nave,
-                      aliens, bullets, mouse_x, mouse_y):
-    """Start a new game when the player clicks Play."""
+                      aliens, balas, mouse_x, mouse_y):
+    """Iniciar cuando se oprime el boton de play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
-        # Reset the game settings.
+        # restablecer los ajustes.
         ai_ajustes.initialize_dynamic_settings()
 
-        # Hide the mouse cursor.
+        # ocultar mouse.
         pygame.mouse.set_visible(False)
 
-        # Reset the game statistics.
+        # restablecer estadisticas del juego.
         stats.reset_stats()
         stats.game_active = True
 
-        # Reset the scoreboard images.
+        # restablecer imagenes del marcador.
         sb.prep_score()
         sb.prep_high_score()
         sb.prep_level()
         sb.prep_ships()
 
-        # Empty the list of aliens and bullets.
+        # Vaciar la lista de alienígenas y balas.
         aliens.empty()
-        bullets.empty()
+        balas.empty()
 
-        # Create a new fleet and center the nave.
+        # crear nuevo grupo de aliens y centrar la nave.
         create_fleet(ai_ajustes, pantalla, nave, aliens)
         nave.center_ship()
 
 
-def fire_bullet(ai_ajustes, pantalla, nave, bullets):
-    """Fire a bullet, if limit not reached yet."""
-    # Create a new bullet, add to bullets group.
-    if len(bullets) < ai_ajustes.bullets_allowed:
-        new_bullet = Bala(ai_ajustes, pantalla, nave)
-        bullets.add(new_bullet)
-
-
+def fire_bullet(ai_ajustes, pantalla, nave, balas):
+    """disparar bala si no se ha llegado al limite."""
+    # crear nueva bala, agregar grupo de balas..
+    if len(balas) < ai_ajustes.bullets_allowed:
+        bala_nueva = Bala(ai_ajustes, pantalla, nave)
+        balas.add(bala_nueva)
+        
 def update_screen(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
-                  bullets, play_button, mensaje_go):
-    """Update images on the pantalla, and flip to the new pantalla."""
-    # Redraw the pantalla, each pass through the loop.
+                  balas, play_button, mensaje_go):
+    """actualizar imagenes en la pantalla."""
+    # redibujar la pantalla con cada bucle.
     fondo = pygame.image.load("images/fondo.png").convert()
     pantalla.blit(fondo, [0, 0])
     sonido_go = pygame.mixer.Sound("382310__myfox14__game-over-arcade.wav")
 
-    # Redraw all bullets, behind nave and aliens.
-    for bullet in bullets.sprites():
-        bullet.dibujo_bala()
+
+    # redribujar todas las balas.
+    for bala in balas.sprites():
+        bala.dibujo_bala()
     nave.blitme()
     aliens.draw(pantalla)
 
-    # Draw the score information.
+    # dibujar puntuacion.
     sb.show_score()
 
-    # Draw the play button if the game is inactive.
+    # Dibujar boton de star cuando el juego no esta corriendo.
     if not estadisticas.game_active:
         play_button.draw_button()
         if estadisticas.ships_left == 0:
             sonido_go.play(loops=0)
             mensaje_go.draw_msg()
 
-    # Make the most recently drawn pantalla visible.
+    # Mostrar la pantalla actualizada.
     pygame.display.flip()
 
 
-def update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens, bullets):
-    """Update position of bullets, and get rid of old bullets."""
-    # Update bullet positions.
-    bullets.update()
+def update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens, balas):
+    """Actualizar la posicion de las balas, eliminar balas viejas."""
+    # mantener actualizada la posicion de las balas.
+    balas.update()
 
-    # Get rid of bullets that have disappeared.
-    for bullet in bullets.copy():
-        if bullet.rect.bottom <= 0:
-            bullets.remove(bullet)
+    # borrar las balas que ya no se ven.
+    for bala in balas.copy():
+        if bala.rect.bottom <= 0:
+            balas.remove(bala)
 
     check_bullet_alien_collisions(ai_ajustes, pantalla, stats, sb, nave,
-                                  aliens, bullets)
+                                  aliens, balas)
 
 
 def check_high_score(stats, sb):
-    """Check to see if there's a new high score."""
+    """cambiar la mejor puntuacion."""
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
