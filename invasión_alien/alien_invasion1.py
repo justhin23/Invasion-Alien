@@ -8,6 +8,7 @@ from estadisticas import Estadisticas
 from pizarra_puntaje import pizarra_puntaje
 from boton import Boton
 from nave import Nave
+from msg_go import Game_over_msg
 import game_functions as gf
 
 
@@ -34,9 +35,12 @@ def run_game():
     # Crear las filas con aliens.
     gf.create_fleet(ai_ajustes, pantalla, nave, aliens)
 
+    # Mensaje de game over.
+    mensaje_go = Game_over_msg(ai_ajustes, pantalla, "Game over")
+
     # Sonido de fondo.
     pygame.mixer.music.load("Interplanetary_Odyssey.ogg")
-    pygame.mixer.music.play()
+    pygame.mixer.music.play(loops=-1)
 
     # Bucle del juego.
     while True:
@@ -48,10 +52,10 @@ def run_game():
             gf.update_bullets(ai_ajustes, pantalla, stats, sb, nave, aliens,
                               balas)
             gf.update_aliens(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                             balas)
+                             balas, mensaje_go)
 
         gf.update_screen(ai_ajustes, pantalla, stats, sb, nave, aliens,
-                         balas, play_button)
+                         balas, play_button, mensaje_go)
 
 
 run_game()

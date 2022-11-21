@@ -52,18 +52,18 @@ class pizarra_puntaje():
         self.high_score_rect.top = self.score_rect.top
 
     def prep_level(self):
-        """Turn the level into a rendered image."""
+        """Mostrar el nivel con una imagen renderizada."""
         self.level_image = self.font.render(str(self.stats.level), True,
                                             self.text_color,
                                             self.ai_settings.bg_color)
 
-        # Position the level below the score.
+        # Posición del nivel en la pantalla.
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
 
     def prep_ships(self):
-        """Show how many ships are left."""
+        """Mostrar cuantas vidas queda."""
         self.ships = Group()
         for nave_numero in range(self.stats.ships_left):
             nave = Nave(self.ai_settings, self.screen)
@@ -72,9 +72,8 @@ class pizarra_puntaje():
             self.ships.add(nave)
 
     def show_score(self):
-        """Draw score to the screen."""
+        """Dibujar puntuación en la pantalla."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
-        # Draw ships.
         self.ships.draw(self.screen)

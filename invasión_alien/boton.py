@@ -18,8 +18,7 @@ class Boton():
         self.font = pygame.font.SysFont(None, 20)
 
         # Ubicar el botón al centro de la pantalla
-        self.rect = pygame.Rect(0, 0, self.ancho, self.alto)
-        self.rect.center = self.pantalla_rect.center
+        self.rect = pygame.Rect(400, 400, self.ancho, self.alto)
 
         # Mensaje del botón.
         self.prep_msg(msg)

@@ -84,12 +84,13 @@ def fire_bullet(ai_ajustes, pantalla, nave, bullets):
         bullets.add(new_bullet)
 
 
-def update_screen(ai_ajustes, pantalla, stats, sb, nave, aliens, bullets,
-                  play_button):
+def update_screen(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
+                  bullets, play_button, mensaje_go):
     """Update images on the pantalla, and flip to the new pantalla."""
     # Redraw the pantalla, each pass through the loop.
     fondo = pygame.image.load("images/fondo.png").convert()
     pantalla.blit(fondo, [0, 0])
+    sonido_go = pygame.mixer.Sound("382310__myfox14__game-over-arcade.wav")
 
     # Redraw all bullets, behind nave and aliens.
     for bullet in bullets.sprites():
@@ -101,8 +102,11 @@ def update_screen(ai_ajustes, pantalla, stats, sb, nave, aliens, bullets,
     sb.show_score()
 
     # Draw the play button if the game is inactive.
-    if not stats.game_active:
+    if not estadisticas.game_active:
         play_button.draw_button()
+        if estadisticas.ships_left == 0:
+            sonido_go.play(loops=0)
+            mensaje_go.draw_msg()
 
     # Make the most recently drawn pantalla visible.
     pygame.display.flip()
@@ -169,7 +173,8 @@ def change_fleet_direction(ai_ajustes, aliens):
     ai_ajustes.fleet_direction *= -1
 
 
-def ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
+def ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas,
+             mensaje_go):
     """Respuesta si la nave es golpeada por un alien."""
     if estadisticas.ships_left > 0:
         # Quitar una vida.
@@ -178,8 +183,9 @@ def ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
         # Actualizar la pizarra de puntaje.
         sb.prep_ships()
 
-    else:
+    if estadisticas.ships_left == 0:
         estadisticas.game_active = False
+        mensaje_go.draw_msg()
         pygame.mouse.set_visible(True)
 
     # Vaciar la lista de aliens y balas.
@@ -195,28 +201,30 @@ def ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
 
 
 def check_aliens_bottom(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
-                        balas):
+                        balas, mensaje_go):
     """Comprobar si algún alien llegó al  borde inferior de la pantalla"""
     screen_rect = pantalla.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # Debe ser igual al evento de la nave golpeada por un alien.
             ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
-                     balas)
+                     balas, mensaje_go)
             break
 
 
-def update_aliens(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
+def update_aliens(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas,
+                  mensaje_go):
     """Efectuar las funciones necesarias, una vez que se ha perdido."""
 
     check_fleet_edges(ai_ajustes, aliens)
     aliens.update()
 
     if pygame.sprite.spritecollideany(nave, aliens):
-        ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas)
+        ship_hit(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas,
+                 mensaje_go)
 
     check_aliens_bottom(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
-                        balas)
+                        balas, mensaje_go)
 
 
 def get_number_aliens_x(ai_ajustes, alien_ancho):
@@ -234,7 +242,8 @@ def get_number_rows(ai_ajustes, nave_altura, alien_altura):
     return cantidad_filas
 
 
-def create_alien(ai_ajustes, pantalla, aliens, numero_de_alien, cantidad_filas):
+def create_alien(ai_ajustes, pantalla, aliens, numero_de_alien,
+                 cantidad_filas):
     """Crear al alien y ubicarlo en la fila."""
     alien = Alien(ai_ajustes, pantalla)
     alien_width = alien.rect.width
