@@ -63,11 +63,11 @@ def check_events(ai_ajustes, pantalla, estadisticas, sb, play_button, nave, alie
                               nave, aliens, balas, mouse_x, mouse_y)
 
 
-def check_play_button(ai_ajustes, pantalla, estadisticasestadisticass play_button, nave,
-                      aliens, balas, mouse_x, mouse_y):
+def check_play_button(ai_ajustes, pantalla, estadisticas, sb, play_button,
+                      nave, aliens, balas, mouse_x, mouse_y):
     """Iniciar cuando se oprime el boton de play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
-    if button_clicked and not stats.game_active:
+    if button_clicked and not estadisticas.game_active:
         # Restablecer los ajustes.
         ai_ajustes.initialize_dynamic_settings()
 
@@ -75,8 +75,8 @@ def check_play_button(ai_ajustes, pantalla, estadisticasestadisticass play_butto
         pygame.mouse.set_visible(False)
 
         # Restablecer estadisticas del juego.
-        estadisticasestadisticasst_stats()
-        estadisticasestadisticass_active = True
+        estadisticas.reset_stats()
+        estadisticas.game_active = True
 
         # Restablecer imagenes del marcador.
         sb.prep_score()
@@ -129,7 +129,8 @@ def update_screen(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
     pygame.display.flip()
 
 
-def update_bullets(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
+def update_bullets(ai_ajustes, pantalla, estadisticas, sb, nave, aliens,
+                   balas):
     """Actualizar la posicion de las balas, eliminar balas viejas."""
     # Mantener actualizada la posicion de las balas.
     balas.update()
@@ -143,10 +144,10 @@ def update_bullets(ai_ajustes, pantalla, estadisticas, sb, nave, aliens, balas):
                                   aliens, balas)
 
 
-def check_high_score(stats, sb):
+def check_high_score(estadisticas, sb):
     """Cambiar la mejor puntuacion."""
-    if stats.score > stats.high_score:
-        stats.high_score = stats.score
+    if estadisticas.score > estadisticas.high_score:
+        estadisticas.high_score = estadisticas.score
         sb.prep_high_score()
 
 
